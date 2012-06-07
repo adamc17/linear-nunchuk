@@ -1,0 +1,6 @@
+/.objs/
+/bin/
+/obj/
+*.depend
+*build_log.html
+*.exe
