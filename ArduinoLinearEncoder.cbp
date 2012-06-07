@@ -338,13 +338,14 @@
 			</Environment>
 		</Build>
 		<Compiler>
-			<Add option="-DF_CPU=16000000L" />
-			<Add option="-DARDUINO=101" />
+			<Add option="-Wall" />
 			<Add option="-fno-exceptions" />
 			<Add option="-ffunction-sections" />
 			<Add option="-fdata-sections" />
 			<Add option="-x c++" />
 			<Add option="-s" />
+			<Add option="-DF_CPU=16000000L" />
+			<Add option="-DARDUINO=101" />
 			<Add option="-DUSE_EEPROM=0" />
 			<Add option="-DUSE_ETHERNET=0" />
 			<Add option="-DUSE_FIRMATA=0" />
@@ -358,7 +359,6 @@
 			<Add option="-DUSE_STEPPER=0" />
 			<Add option="-DUSE_TINYGPS=0" />
 			<Add option="-DUSE_WIRE=0" />
-			<Add option="-Wall" />
 			<Add directory="." />
 			<Add directory=".\cores\arduino" />
 			<Add directory="$(APP_PATH)\arduino-1.0\libraries\EEPROM" />
@@ -414,6 +414,7 @@
 		</Unit>
 		<Unit filename="libraries\libraries.cpp" />
 		<Unit filename="sketch.cpp" />
+		<Unit filename="sketch\sketch.ino" />
 		<Extensions>
 			<code_completion />
 			<envvars />
