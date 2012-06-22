@@ -1,9 +1,9 @@
 #include <PinChangeInt.h>
 #include <Wire.h>
-#include "FakeWiimoteExtension.h"
+#include "Nunchuk.h"
 
 
-FakeNunchuk nunchuk;
+Nunchuk nunchuk;
 
 //Declares Output Pins
 enum {
@@ -80,13 +80,16 @@ void setup() {
 	Serial.begin(115200);
 	// get first reading
 	setupEncoder();
-	nunchuk.begin();
 	// attach interrupt to the two pins
 	PCintPort::attachInterrupt(pinA, encoderChanged, CHANGE);
 	PCintPort::attachInterrupt(pinB, encoderChanged, CHANGE);
+
+
+	nunchuk.begin();
 }
 
 int stride = 0;
+Nunchuk::DataReport report = Nunchuk::defaultReport;
 void loop() {
 	// code that should be repeated goes here
 
@@ -94,6 +97,9 @@ void loop() {
 	delay(250);
 	//Serial.println(mapcounter, DEC);
 	//Serial.println(counter, DEC);
+        report.joystickAxes[0] = lowByte(counter);
+        nunchuk.sendChange(report);
+#if 0
 	nunchuk.report.joystickAxes[0] = lowByte(counter);
         nunchuk.applyReportUpdates();
 	nunchuk.printReceiveData();
@@ -107,7 +113,7 @@ void loop() {
            Serial.println("");
         }
         stride = (stride+1)%20;	//Serial.println ();
-
+#endif
 	//Serial Write
 	/*
 	Serial.write ("I =  ");
