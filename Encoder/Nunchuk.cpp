@@ -67,7 +67,7 @@ void Nunchuk::begin(callbackFnPtr yourFunction, Nunchuk::DataReport const & init
 	memcpy(&(calib[0]), &calibration, sizeof(CalibData));
 
 
-	wm_init(const_cast<uint8_t *>(&(NunchukID[0])), &(initialRpt[0]), &(calib[0]), callback);
+	wm_init(const_cast<uint8_t *>(&(NunchukID[0])), &(initialRpt[0]), &(calib[0]), sizeof(calibration), callback);
 }
 
 void Nunchuk::sendChange(Nunchuk::DataReport const & data) {

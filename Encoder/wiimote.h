@@ -17,7 +17,7 @@
 
 // initialize wiimote interface with id (6 bytes), starting data (6 bytes),
 // and calibration data (6 bytes) (and a callback on requests)
-void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, void (*function)(void));
+void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, unsigned char calib_size, void (*function)(void));
 
 // set button data (6 bytes)
 void wm_newaction(unsigned char * d);

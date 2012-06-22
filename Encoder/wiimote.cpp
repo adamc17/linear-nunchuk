@@ -148,7 +148,7 @@ void wm_newaction(unsigned char * d) {
 	}
 }
 
-void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, void (*function)(void)) {
+void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, unsigned char calib_size, void (*function)(void)) {
 	// link user function
 	wm_sample_event = function;
 
@@ -162,7 +162,7 @@ void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, vo
 	}
 
 	// set calibration data
-	for (unsigned int i = 0, j = 0x20; i < 6; i++, j++) {
+	for (unsigned int i = 0, j = 0x20; i < calib_size; i++, j++) {
 		twi_reg[j] = cal_data[i];
 	}
 
