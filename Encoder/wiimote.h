@@ -15,11 +15,12 @@
 #define dev_detect_ddr DDRD
 #define dev_detect_pin 4
 
-// initialize wiimote interface with id, starting data, and calibration data
-void wm_init(unsigned char *, unsigned char *, unsigned char *, void (*)(void));
+// initialize wiimote interface with id (6 bytes), starting data (6 bytes),
+// and calibration data (6 bytes) (and a callback on requests)
+void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, void (*function)(void));
 
-// set button data
-void wm_newaction(unsigned char *);
+// set button data (6 bytes)
+void wm_newaction(unsigned char * d);
 
 #define wiimote_h
 #endif
