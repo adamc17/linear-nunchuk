@@ -35,42 +35,35 @@ class Nunchuk {
 	public:
 		
 		typedef void (*callbackFnPtr)(Nunchuk &);
-		union DataReport {
-			struct ReportImpl {
-				uint8_t joystickAxes[2];
-				uint8_t accelAxesHigh[3];
-				uint8_t accelZLow : 2;
-				uint8_t accelYLow : 2;
-				uint8_t accelXLow : 2;
-				bool buttonC : 1;
-				bool buttonZ : 1;
-			} data;
-			uint8_t rawBytes[sizeof(ReportImpl)];
-		}
+		struct DataReport {
+			uint8_t joystickAxes[2];
+			uint8_t accelAxesHigh[3];
+			uint8_t accelZLow : 2;
+			uint8_t accelYLow : 2;
+			uint8_t accelXLow : 2;
+			bool buttonC : 1;
+			bool buttonZ : 1;
+		};
 			
-		union CalibData {
-			struct CalibImpl {
-				uint8_t accelCalibZero[3];
-				uint8_t accelCalibG[3];
-				struct JSCalibAxis {
-					uint8_t maxVal;
-					uint8_t minVal;
-					uint8_t centerVal;
-				} jsCalibAxes[2];
-			} data;
-			uint8_t rawBytes[sizeof(CalibImpl)];
+		struct CalibData {
+			uint8_t accelCalibZero[3];
+			uint8_t accelCalibG[3];
+			struct JSCalibAxis {
+				uint8_t maxVal;
+				uint8_t minVal;
+				uint8_t centerVal;
+			} jsCalibAxes[2];
 		};
 		static CalibData calibration;
 		static const DataReport defaultReport;
-		
-		Nunchuk(callbackFnPtr yourFunction = NULL);
-		void begin(DataReport const & initialData = defaultReport);
+
+		void begin(callbackFnPtr yourFunction = 0, DataReport const & initialData = defaultReport);
 		
 		void sendChange(DataReport const & data);
 	private:
 		static void trampoline();
 		callbackFnPtr userCallback;
-		static Nunchuck * self;
+		static Nunchuk * self;
 		
 };
 

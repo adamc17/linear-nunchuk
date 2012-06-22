@@ -35,7 +35,6 @@ Nunchuk::CalibData Nunchuk::calibration = {
 		{0xff, 0x00, 0x7f},
 		{0xff, 0x00, 0x7f}
 	}
-}
 };
 
 static const uint8_t NunchukID[] = {0x00, 0x00, 0xA4, 0x20, 0x00, 0x00};
@@ -52,25 +51,31 @@ const Nunchuk::DataReport defaultReport = {
 
 Nunchuk * Nunchuk::self = 0;
 
-Nunchuk::Nunchuk(callbackFnPtr yourFunction)
-	: userFunction(yourFunction)
-{
+void Nunchuk::begin(callbackFnPtr yourFunction, Nunchuk::DataReport const & initialData) {
 	self = this;
-};
-
-void Nunchuk::begin(Nunchuk::DataReport const & initialData) {
+	userCallback = yourFunction
 	typedef void (*voidFuncPtr)(void);
 	voidFuncPtr callback = NULL;
-	if (userFunction) {
+	if (userCallback) {
 		callback = &Nunchuk::trampoline;
 	}
-	wm_init(&(NunchukID[0]), const_cast<uint8_t *>(&(initialData.rawBytes[0])), &(calibration.rawBytes[0]), callback);
+	
+	uint8_t initialRpt[sizeof(DataReport)];
+	memcpy(&(initialRpt[0]), &initialData, sizeof(DataReport));
+	
+	uint8_t calib[sizeof(CalibData)];
+	memcpy(&(calib[0]), &calibration, sizeof(CalibData));
+	
+	
+	wm_init(&(NunchukID[0]), &(initialRpt[0]), &(calib[0]), callback);
 }
 		
 void Nunchuk::sendChange(Nunchuk::DataReport const & data) {
-	wm_newaction(const_cast<uint8_t *>(&(data.rawBytes[0])));
+	uint8_t rpt[sizeof(DataReport)];
+	memcpy(&(rpt[0]), &data, sizeof(DataReport));
+	wm_newaction(&(rpt[0]));
 }
 
 void Nunchuk::trampoline() {
-	self->userFunction(&self);
+	self->userCallback(&self);
 }
