@@ -99,32 +99,6 @@ void loop() {
 	//Serial.println(counter, DEC);
 	report.joystickAxes[0] = lowByte(counter);
 	nunchuk.sendChange(report);
-#if 0
-	nunchuk.report.joystickAxes[0] = lowByte(counter);
-	nunchuk.applyReportUpdates();
-	nunchuk.printReceiveData();
-
-	if (stride == 0) {
-		Serial.print("Memory dump: ");
-		for (uint8_t * loc = nunchuk.getMemoryLocation(0), * last = nunchuk.getMemoryLocation(0xff); loc <= last; ++loc) {
-			Serial.print(*loc, HEX);
-			Serial.print(" ");
-		}
-		Serial.println("");
-	}
-	stride = (stride + 1) % 20;	//Serial.println ();
-#endif
-	//Serial Write
-	/*
-	Serial.write ("I =  ");
-	 Serial.println (Ival,DEC);
-	 Serial.write ("A =  ");
-	 Serial.println (Aval,DEC);
-	 Serial.write ("B =  ");
-	 Serial.println (Bval,DEC);
-	 Serial.println();
-	 delay(500);
-	 */
 }
 
 
