@@ -9,7 +9,7 @@
 	http://academic.cleardefinition.com/
 	Iowa State University Virtual Reality Applications Center
 	Human-Computer Interaction Graduate Program
-	
+
 */
 
 //           Copyright Iowa State University 2012.
@@ -33,7 +33,7 @@
 
 class Nunchuk {
 	public:
-		
+
 		typedef void (*callbackFnPtr)(Nunchuk &);
 		struct DataReport {
 			uint8_t joystickAxes[2];
@@ -44,7 +44,7 @@ class Nunchuk {
 			bool buttonC : 1;
 			bool buttonZ : 1;
 		};
-			
+
 		struct CalibData {
 			uint8_t accelCalibZero[3];
 			uint8_t accelCalibG[3];
@@ -58,13 +58,13 @@ class Nunchuk {
 		static const DataReport defaultReport;
 
 		void begin(callbackFnPtr yourFunction = 0, DataReport const & initialData = defaultReport);
-		
+
 		void sendChange(DataReport const & data);
 	private:
 		static void trampoline();
 		callbackFnPtr userCallback;
 		static Nunchuk * self;
-		
+
 };
 
 #endif // INCLUDED_Nunchuk_h_GUID_9F45DC8C_5684_4F9B_0369_E7141D93BE28

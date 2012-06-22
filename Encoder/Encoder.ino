@@ -1,5 +1,4 @@
 #include <PinChangeInt.h>
-#include <Wire.h>
 #include "Nunchuk.h"
 
 
@@ -74,6 +73,9 @@ void encoderChanged() {
 	previous = current;
 }
 
+// initial values
+Nunchuk::DataReport report = Nunchuk::defaultReport;
+
 void setup() {
 	// setup code goes here
 	//Initialize serial
@@ -84,12 +86,10 @@ void setup() {
 	PCintPort::attachInterrupt(pinA, encoderChanged, CHANGE);
 	PCintPort::attachInterrupt(pinB, encoderChanged, CHANGE);
 
-
 	nunchuk.begin();
 }
 
 int stride = 0;
-Nunchuk::DataReport report = Nunchuk::defaultReport;
 void loop() {
 	// code that should be repeated goes here
 
@@ -97,22 +97,22 @@ void loop() {
 	delay(250);
 	//Serial.println(mapcounter, DEC);
 	//Serial.println(counter, DEC);
-        report.joystickAxes[0] = lowByte(counter);
-        nunchuk.sendChange(report);
+	report.joystickAxes[0] = lowByte(counter);
+	nunchuk.sendChange(report);
 #if 0
 	nunchuk.report.joystickAxes[0] = lowByte(counter);
-        nunchuk.applyReportUpdates();
+	nunchuk.applyReportUpdates();
 	nunchuk.printReceiveData();
 
-        if (stride == 0) {
-           Serial.print("Memory dump: ");
-           for (uint8_t * loc = nunchuk.getMemoryLocation(0), * last = nunchuk.getMemoryLocation(0xff); loc <= last; ++loc) {
-            Serial.print(*loc, HEX);
-            Serial.print(" ");
-           }
-           Serial.println("");
-        }
-        stride = (stride+1)%20;	//Serial.println ();
+	if (stride == 0) {
+		Serial.print("Memory dump: ");
+		for (uint8_t * loc = nunchuk.getMemoryLocation(0), * last = nunchuk.getMemoryLocation(0xff); loc <= last; ++loc) {
+			Serial.print(*loc, HEX);
+			Serial.print(" ");
+		}
+		Serial.println("");
+	}
+	stride = (stride + 1) % 20;	//Serial.println ();
 #endif
 	//Serial Write
 	/*
