@@ -1,5 +1,5 @@
 #include <PinChangeInt.h>
-//#include <Streaming.h>
+#include <Streaming.h>
 #include "AutoRanging.h"
 #include "Watchdog.h"
 #include "Nunchuk.h"
@@ -41,7 +41,7 @@ void setup() {
 
 
   //Initialize serial
-  Serial.begin(9600);
+  Serial.begin(115200);
   // get first reading
   setupEncoder();
   Serial.print("Encoder setup complete, counter currently at ");
@@ -50,7 +50,6 @@ void setup() {
   checkVCC.reset();
 }
 
-/*
 Watchdog dumpMapStatus(5000);
 
 enum {
@@ -62,21 +61,20 @@ inline void startExtension() {
   nunchuk.begin(handleRequest);
   digitalWrite(LED_BUILTIN, HIGH);
 }
-*/
 
 void loop() {
   // code that should be repeated goes here  
-  /*
+
   sendChange(nunchuk);
 
   if (checkVCC.hasExpired()) {
     int val = analogRead(WiimoteVCCPin);
 
-    Serial << val << endl;
+    Serial << "Reading VCC wiimote sense: " << val << endl;
     if (connected && val < stopThreshold) {
       Serial << "Looks like we got unplugged." << endl;
       connected = false;  
-      digitalWrite( dev_detect_pin, LOW);
+      Nunchuk::setDeviceDetectLow();
     } 
     else if (!connected && val > startThreshold) {
       startExtension();
@@ -87,13 +85,13 @@ void loop() {
   }
 
   if (dumpMapStatus.hasExpired()) {
-    counterRange.process(getCounter());
+    counterRange.process(getEncoderValue());
     counterRange.dumpStatus(Serial);
     dumpMapStatus.reset();
   }
   digitalWrite(LED_BUILTIN, LOW);
   sendChange(nunchuk);
-  */
+
   delay(250);
   //Serial << "Counter value: " << _DEC(myCounter) << " Mapped: " << _DEC(mapped) << endl;
   //Serial.println(mapcounter, DEC);
