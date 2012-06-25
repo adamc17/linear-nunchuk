@@ -1,6 +1,10 @@
 #include "wiimote.h"
 #include "wm_crypto.h"
 
+#ifdef ARDUINO
+#include <Arduino.h>
+#endif
+
 // pointer to user function
 static void (*wm_sample_event)();
 
@@ -167,8 +171,13 @@ void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, un
 	}
 
 	// initialize device detect pin
+#ifdef ARDUINO
+        pinMode(dev_detect_pin, OUTPUT);
+        digitalWrite(dev_detect_pin, LOW);
+#else
 	dev_detect_port &= 0xFF ^ _BV(dev_detect_pin);
 	dev_detect_ddr |= _BV(dev_detect_pin);
+#endif
 	_delay_ms(500); // delay to simulate disconnect
 
 	// ready twi bus, no pull-ups
@@ -179,7 +188,11 @@ void wm_init(unsigned char * id, unsigned char * t, unsigned char * cal_data, un
 	twi_slave_init(0x52);
 
 	// make the wiimote think something is connected
+#ifdef ARDUINO
+        digitalWrite(dev_detect_pin, HIGH);
+#else
 	dev_detect_port |= _BV(dev_detect_pin);
+#endif
 }
 
 ISR(TWI_vect) {

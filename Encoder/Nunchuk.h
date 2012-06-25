@@ -56,7 +56,7 @@ class Nunchuk {
 		};
 		static CalibData calibration;
 		static const DataReport defaultReport;
-
+                static void setDeviceDetectLow();
 		void begin(callbackFnPtr yourFunction = 0, DataReport const & initialData = defaultReport);
 
 		void sendChange(DataReport const & data);
