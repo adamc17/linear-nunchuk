@@ -1,4 +1,6 @@
-
+#define NO_PORTB_PINCHANGES
+#define NO_PORTC_PINCHANGES
+#define DISABLE_PCINT_MULTI_SERVICE
 #define LIBCALL_PINCHANGEINT // keep it from double-defining things - annoying.
 #include <PinChangeInt.h>
 #include "handleencoder.h"

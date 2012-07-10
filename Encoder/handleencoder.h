@@ -2,8 +2,8 @@
 
 //Declares Output Pins
 enum {
-  pinA = 4,
-  pinB = 5
+  pinA = 2,
+  pinB = 3
 };
 
 typedef int16_t EncoderType;
